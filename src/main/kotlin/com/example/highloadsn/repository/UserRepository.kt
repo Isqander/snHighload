@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 interface UserRepository {
     fun getAll(): List<User>
 
-    fun getById(id: Long): User
+    fun findById(id: Long): User?
 
     fun create(user: User)
 

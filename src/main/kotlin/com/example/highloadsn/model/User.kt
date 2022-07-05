@@ -6,6 +6,6 @@ data class User(
     val surname: String,
     val age: Int,
     val sex: String,
-    val interests: List<String>,
+    val interests: List<String>?,
     val town: String,
 )

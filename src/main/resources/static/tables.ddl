@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS user
     surname   VARCHAR(255) NOT NULL,
     age       INT          NOT NULL,
     sex       VARCHAR(255) NOT NULL,
-    interests VARCHAR(255) NOT NULL,
     town      VARCHAR(255) NOT NULL
 ) ENGINE = INNODB;
 
