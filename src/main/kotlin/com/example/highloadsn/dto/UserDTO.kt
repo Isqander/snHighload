@@ -6,6 +6,6 @@ data class UserDTO(
     val surname: String,
     val age: Int,
     val sex: String,
-    val interests: List<String>?,
+    val interests: List<InterestDTO>,
     val town: String,
 )

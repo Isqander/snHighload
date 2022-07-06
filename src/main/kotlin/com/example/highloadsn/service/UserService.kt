@@ -7,7 +7,7 @@ interface UserService {
 
     fun getById(id: Long): UserDTO
 
-    fun create(userDto: UserDTO)
+    fun create(userDto: UserDTO) : Long
 
     fun update(id: Long, userDto: UserDTO)
 

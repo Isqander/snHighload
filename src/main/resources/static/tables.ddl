@@ -22,9 +22,18 @@ CREATE TABLE `user_to_interest`
     interest_id INT NOT NULL,
     PRIMARY KEY (user_id, interest_id),
     CONSTRAINT `Constr_user_fk`
-        FOREIGN KEY user_fk (user_id) REFERENCES user (id)
-            ON DELETE CASCADE ON UPDATE CASCADE,
+        FOREIGN KEY user_fk (user_id) REFERENCES user (id),
     CONSTRAINT `Constr_interest_fk`
         FOREIGN KEY interest_fk (interest_id) REFERENCES interest (id)
-            ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = INNODB;
+
+CREATE TABLE `friends`
+(
+    first_user_id     INT NOT NULL,
+    second_user_id INT NOT NULL,
+    PRIMARY KEY (first_user_id, second_user_id),
+    CONSTRAINT `Constr_first_user_fk`
+        FOREIGN KEY user_fk (first_user_id) REFERENCES user (id),
+    CONSTRAINT `Constr_second_user_fk`
+        FOREIGN KEY interest_fk (second_user_id) REFERENCES user (id)
 ) ENGINE = INNODB

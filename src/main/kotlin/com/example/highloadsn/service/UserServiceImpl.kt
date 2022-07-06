@@ -1,6 +1,7 @@
 package com.example.highloadsn.service
 
 import com.example.highloadsn.dto.UserDTO
+import com.example.highloadsn.model.InterestRef
 import com.example.highloadsn.model.User
 import com.example.highloadsn.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -16,21 +17,29 @@ class UserServiceImpl(
         surname = this.surname,
         age = this.age,
         sex = this.sex,
-        interests = this.interests,
+        interests = listOf(),//TODO
+        town = this.town,
+    )
+
+    private fun UserDTO.toEntity() = User(
+        id = this.id,
+        name = this.name,
+        surname = this.surname,
+        age = this.age,
+        sex = this.sex,
+        interests = this.interests.map { InterestRef(it.id) }.toList(),
         town = this.town,
     )
     override fun getAll(): List<UserDTO> = userRepository.getAll().map { it.toDTO() }
 
     override fun getById(id: Long): UserDTO = userRepository.findById(id)
         ?.toDTO()
-        ?: throw Exception("User wirh id = $id not found")
+        ?: throw Exception("User with id = $id not found")
 
-    override fun create(userDto: UserDTO) {
-        TODO("Not yet implemented")
-    }
+    override fun create(userDto: UserDTO) : Long = userRepository.create(userDto.toEntity())
 
     override fun update(id: Long, userDto: UserDTO) {
-        TODO("Not yet implemented")
+        userRepository.update(id, userDto.toEntity())
     }
 
     override fun delete(id: Long){

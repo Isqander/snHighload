@@ -16,8 +16,8 @@ class UserController(
     fun getById(@PathVariable id: Long): UserDTO = userService.getById(id)
 
     @PostMapping
-    fun create(@RequestBody userDto: UserDTO) {
-        userService.create(userDto)
+    fun create(@RequestBody userDto: UserDTO) : Long {
+        return userService.create(userDto)
     }
 
     @PutMapping("/{id}")
