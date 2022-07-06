@@ -15,6 +15,8 @@ class Mappers {
                 sex = rs.getString("sex"),
 //                interests = null,//TODO
                 town = rs.getString("town"),
+                email = rs.getString("email"),
+                password = rs.getString("password"),
             )
         }
 

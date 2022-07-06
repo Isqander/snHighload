@@ -19,6 +19,8 @@ class UserServiceImpl(
         sex = this.sex,
         interests = listOf(),//TODO
         town = this.town,
+        email = this.email,
+        password = this.password
     )
 
     private fun UserDTO.toEntity() = User(
@@ -29,6 +31,8 @@ class UserServiceImpl(
         sex = this.sex,
         interests = this.interests.map { InterestRef(it.id) }.toList(),
         town = this.town,
+        email = this.email,
+        password = this.password
     )
     override fun getAll(): List<UserDTO> = userRepository.getAll().map { it.toDTO() }
 
