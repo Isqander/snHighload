@@ -16,7 +16,7 @@ class UserController(
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<UserDTO> = ResponseEntity.ok(userService.getById(id))
 
-    @PostMapping
+    @PostMapping("/register")
     fun create(@RequestBody userDto: UserDTO) : ResponseEntity<Long> {
         return ResponseEntity.ok(userService.create(userDto))
     }

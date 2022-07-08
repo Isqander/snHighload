@@ -1,6 +1,7 @@
 package com.example.highloadsn.util
 
 import com.example.highloadsn.model.Interest
+import com.example.highloadsn.model.Role
 import com.example.highloadsn.model.User
 import org.springframework.jdbc.core.RowMapper
 
@@ -17,6 +18,7 @@ class Mappers {
                 town = rs.getString("town"),
                 email = rs.getString("email"),
                 password = rs.getString("password"),
+                roles = listOf(Role("ROLE_USER"))
             )
         }
 

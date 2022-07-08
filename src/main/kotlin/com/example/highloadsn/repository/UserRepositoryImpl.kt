@@ -27,13 +27,15 @@ class UserRepositoryImpl(
     override fun create(user: User): Long {
         val keyHolder = GeneratedKeyHolder()
         jdbcTemplate.update(
-            "insert into user (name, surname, age, sex, town) values (:name, :surname, :age, :sex, :town)",
+            "insert into user (name, surname, age, sex, town, email, password) values (:name, :surname, :age, :sex, :town, :email, :password)",
             MapSqlParameterSource( mapOf(
                 "name" to user.name,
                 "surname" to user.surname,
                 "age" to user.age,
                 "sex" to user.sex,
                 "town" to user.town,
+                "email" to user.email,
+                "password" to user.password,
             )),
             keyHolder,
             listOf("id").toTypedArray()
@@ -43,7 +45,7 @@ class UserRepositoryImpl(
 
     override fun update(id: Long, user: User) {
         jdbcTemplate.update(
-            "update user set name = :name, surname = :surname, age = :age, sex = :sex, town = :town where id = :id",
+            "update user set name = :name, surname = :surname, age = :age, sex = :sex, town = :town, :email, :password where id = :id",
             mapOf(
                 "id" to id,
                 "name" to user.name,
@@ -51,6 +53,8 @@ class UserRepositoryImpl(
                 "age" to user.age,
                 "sex" to user.sex,
                 "town" to user.town,
+                "email" to user.email,
+                "password" to user.password,
             ),
         )
     }
@@ -58,4 +62,11 @@ class UserRepositoryImpl(
     override fun delete(id: Long) {
         TODO("Not yet implemented")
     }
+
+    override fun findByEmail(email: String?): User?  =
+        jdbcTemplate.query(
+            "select * from user where email = :email",
+            mapOf("email" to email),
+            USER_TO_DTO
+        ).firstOrNull()
 }

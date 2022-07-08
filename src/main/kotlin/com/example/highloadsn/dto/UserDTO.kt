@@ -1,21 +1,36 @@
 package com.example.highloadsn.dto
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+class UserDTO{
 
-data class UserDTO(
-    val id: Long = 0,
-    val name: String,
-    val surname: String,
-    val age: Int,
-    val sex: String,
-    val interests: List<InterestDTO>,
-    val town: String,
+    var id: Long? = 0
+    var age: Int? = 0
+    var sex: String? = null
+    var interests: List<InterestDTO>? = null
+    var town: String? = null
+    var name: String? = null
+    var surname: String? = null
+    var email: String? = null
+    var password: String? = null
 
-    val email: String,
-){
-    var password: String = ""
-        get() = field
-        set(value){
-            field = BCryptPasswordEncoder().encode(value)
-        }
-}
+    constructor() {}
+    constructor(
+        id: Long?,
+        age: Int?,
+        sex: String?,
+        interests: List<InterestDTO>?,
+        town: String?,
+        name: String?,
+        surname: String?,
+        email: String?,
+        password: String?
+    ) : super() {
+        this.id = id
+        this.age = age
+        this.sex = sex
+        this.town = town
+        this.interests = interests
+        this.name = name
+        this.surname = surname
+        this.email = email
+        this.password = password
+    }}
