@@ -3,7 +3,15 @@ package com.example.highloadsn.controller
 import com.example.highloadsn.dto.UserDTO
 import com.example.highloadsn.service.UserService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+
 
 @RestController
 @RequestMapping("/users")
@@ -17,18 +25,18 @@ class UserController(
     fun getById(@PathVariable id: Long): ResponseEntity<UserDTO> = ResponseEntity.ok(userService.getById(id))
 
     @PostMapping("/register")
-    fun create(@RequestBody userDto: UserDTO) : ResponseEntity<Long> {
+    fun create(@RequestBody userDto: UserDTO): ResponseEntity<Long> {
         return ResponseEntity.ok(userService.create(userDto))
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody userDto: UserDTO) : ResponseEntity<Any> {
+    fun update(@PathVariable id: Long, @RequestBody userDto: UserDTO): ResponseEntity<Any> {
         userService.update(id, userDto)
         return ResponseEntity.ok().build()
     }
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long) : ResponseEntity<Any>{
+    fun delete(@PathVariable id: Long): ResponseEntity<Any> {
         userService.delete(id)
         return ResponseEntity.ok().build()
     }

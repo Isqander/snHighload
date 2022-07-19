@@ -42,11 +42,31 @@
 
 <br><br><br><br>
 <div class="container">
-    <div class="alert alert-success">
-        <strong>Success!</strong> Login Successful.
-        <a th:href="@{/all}">All users</a>
-
-    </div>
+    <table>
+        <thead>
+        <tr>
+            <th> name </th>
+            <th> surname </th>
+            <th> sex </th>
+            <th> town </th>
+            <th> email </th>
+            <th> age </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${users.empty}">
+            <td colspan="2"> No users Available </td>
+        </tr>
+        <tr th:each="users : ${users}">
+            <td><span th:text="${users.name}"> name </span></td>
+            <td><span th:text="${users.surname}"> surname </span></td>
+            <td><span th:text="${users.sex}"> sex </span></td>
+            <td><span th:text="${users.town}"> town </span></td>
+            <td><span th:text="${users.email}"> email </span></td>
+            <td><span th:text="${users.age}"> age </span></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 
