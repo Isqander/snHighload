@@ -1,11 +1,11 @@
 package com.example.highloadsn.dto
 
-class UserDTO{
+class UserDTO {
 
     var id: Long? = 0
     var age: Int? = 0
     var sex: String? = null
-    var interests: List<InterestDTO>? = null
+    var interests: Set<String> = HashSet()
     var town: String? = null
     var name: String? = null
     var surname: String? = null
@@ -17,7 +17,7 @@ class UserDTO{
         id: Long?,
         age: Int?,
         sex: String?,
-        interests: List<InterestDTO>?,
+        interests: Set<String>,
         town: String?,
         name: String?,
         surname: String?,
@@ -33,4 +33,5 @@ class UserDTO{
         this.surname = surname
         this.email = email
         this.password = password
-    }}
+    }
+}

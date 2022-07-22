@@ -1,8 +1,10 @@
 package com.example.highloadsn.service
 
 import com.example.highloadsn.dto.UserDTO
+import com.example.highloadsn.model.Interest
 import com.example.highloadsn.model.Role
 import com.example.highloadsn.model.User
+import com.example.highloadsn.repository.InterestRepository
 import com.example.highloadsn.repository.UserRepository
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -16,6 +18,7 @@ import java.util.stream.Collectors
 @Service
 class UserServiceImpl(
     private val userRepository: UserRepository,
+    private val interestRepository: InterestRepository,
 ) : UserService {
 
     private fun User.toDTO() = UserDTO(
@@ -24,7 +27,7 @@ class UserServiceImpl(
         surname = this.surname,
         age = this.age,
         sex = this.sex,
-        interests = listOf(),//TODO
+        interests = this.getInterestIds().mapNotNull { interestRepository.getById(it)?.name }.toHashSet(),  //TODO fix N+1
         town = this.town,
         email = this.email,
         password = this.password
@@ -37,23 +40,25 @@ class UserServiceImpl(
         age = this.age!!,
         sex = this.sex!!,
         //    interests = this.interests!!.map { InterestRef(it.id) }.toList(),
-        interests = listOf(),
+        interests = hashSetOf(),
         town = this.town!!,
         email = this.email!!,
         password = BCryptPasswordEncoder().encode(this.password),
         roles = listOf(Role("ROLE_USER"))
     )
 
-    override fun getAll(): List<UserDTO> = userRepository.getAll().map { it.toDTO() }
+    override fun getAll(): List<UserDTO> = userRepository.findAll().map { it.toDTO() }
 
-    override fun getById(id: Long): UserDTO = userRepository.findById(id)
-        ?.toDTO()
-        ?: throw Exception("User with id = $id not found")
+    override fun getById(id: Long): UserDTO = userRepository.findById(id).orElseThrow()
+        .toDTO()
 
-    override fun create(userDto: UserDTO): Long = userRepository.create(userDto.toEntity())
+    override fun create(userDto: UserDTO) {
+        userRepository.save(userDto.toEntity())
+    }
 
     override fun update(id: Long, userDto: UserDTO) {
-        userRepository.update(id, userDto.toEntity())
+        userDto.id = id
+        userRepository.save(userDto.toEntity())
     }
 
     override fun delete(id: Long) {
@@ -67,6 +72,19 @@ class UserServiceImpl(
             user.email, user.password,
             mapRolesToAuthorities(user.roles)
         )
+    }
+
+    override fun addInterestToUser(userId: Long, interest: Interest) {
+        val user = userRepository.findById(userId).orElseThrow()
+        val interestFromDB = interestRepository.findByName(interest.name)
+        if (interestFromDB != null) {
+            user.addInterest(interestFromDB)
+            userRepository.save(user)
+        } else {
+            val interest = interestRepository.save(interest)
+            user.addInterest(interest)
+            userRepository.save(user)
+        }
     }
 
     private fun mapRolesToAuthorities(roles: Collection<Role>): Collection<GrantedAuthority?> {

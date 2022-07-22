@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
@@ -19,17 +18,6 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     @Autowired
     private val userService: UserService? = null
-
-//    override fun configure(auth: AuthenticationManagerBuilder) {
-//        auth.inMemoryAuthentication()
-//            .withUser("admin")
-//            .password(encoder().encode("pass"))
-//            .roles("DOCTOR", "ADMIN")
-//            .and()
-//            .withUser("doctor")
-//            .password(encoder().encode("pass"))
-//            .roles("DOCTOR")
-//    }
 
     @Bean
     fun authenticationProvider(): DaoAuthenticationProvider {
@@ -44,24 +32,23 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
         auth.authenticationProvider(authenticationProvider())
     }
 
-    //    override fun configure(http: HttpSecurity?) {
-//        http {
-//            httpBasic {}
-//            authorizeRequests {
-//                authorize("/users/**", hasAuthority("ROLE_ADMIN"))
-//                authorize("/users/register/**", permitAll)
-//            }
-//        }
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.authorizeRequests().antMatchers(
-            "/registration**", "/js/**",
-            "/css/**", "/img/**"
-        ).permitAll().anyRequest()
-            .authenticated().and().formLogin().loginPage("/login").permitAll().and().logout()
-            .invalidateHttpSession(true).clearAuthentication(true)
-            .logoutRequestMatcher(AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
+        http.authorizeRequests()
+            //uncommit for auth
+//        .antMatchers(
+//            "/registration**", "/js/**",
+//            "/css/**", "/img/**"
+//        )
+//            .permitAll()
+            .anyRequest()
+            //uncommit for auth
+//            .authenticated().and().formLogin().loginPage("/login").permitAll().and().logout()
+//            .invalidateHttpSession(true).clearAuthentication(true)
+//            .logoutRequestMatcher(AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
             .permitAll()
+            .and()
+            .csrf().disable()
     }
 
 

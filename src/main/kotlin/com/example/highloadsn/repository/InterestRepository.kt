@@ -1,16 +1,13 @@
 package com.example.highloadsn.repository
 
 import com.example.highloadsn.model.Interest
-import com.example.highloadsn.model.User
+import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface InterestRepository {
-    fun getAll(): List<Interest>
+interface InterestRepository : CrudRepository<Interest, Long> {
 
-    fun findById(id: Long): User?
+    fun getById(id: Long): Interest?
 
-    fun create(user: User) : Long
-
-    fun delete(id: Long)
+    fun findByName(name: String?): Interest?
 }

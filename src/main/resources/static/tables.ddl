@@ -38,4 +38,13 @@ CREATE TABLE `friends`
         FOREIGN KEY user_fk (first_user_id) REFERENCES user (id),
     CONSTRAINT `Constr_second_user_fk`
         FOREIGN KEY interest_fk (second_user_id) REFERENCES user (id)
-) ENGINE = INNODB
+) ENGINE = INNODB;
+
+
+CREATE TABLE IF NOT EXISTS role
+(
+    id   INTEGER AUTO_INCREMENT PRIMARY KEY,
+    user_key INTEGER NOT NULL,
+    user INTEGER NOT NULL,
+    name VARCHAR(255) NOT NULL
+) ENGINE = INNODB;

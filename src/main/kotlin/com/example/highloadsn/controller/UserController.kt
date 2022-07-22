@@ -1,6 +1,7 @@
 package com.example.highloadsn.controller
 
 import com.example.highloadsn.dto.UserDTO
+import com.example.highloadsn.model.Interest
 import com.example.highloadsn.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -25,8 +26,13 @@ class UserController(
     fun getById(@PathVariable id: Long): ResponseEntity<UserDTO> = ResponseEntity.ok(userService.getById(id))
 
     @PostMapping("/register")
-    fun create(@RequestBody userDto: UserDTO): ResponseEntity<Long> {
+    fun create(@RequestBody userDto: UserDTO): ResponseEntity<Any> {
         return ResponseEntity.ok(userService.create(userDto))
+    }
+
+    @PostMapping("/addInterest/{userId}")
+    fun addInterest(@PathVariable userId: Long, @RequestBody interest: Interest): ResponseEntity<Any> {
+        return ResponseEntity.ok(userService.addInterestToUser(userId, interest))
     }
 
     @PutMapping("/{id}")

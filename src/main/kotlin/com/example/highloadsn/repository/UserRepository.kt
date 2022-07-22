@@ -1,18 +1,14 @@
 package com.example.highloadsn.repository
 
 import com.example.highloadsn.model.User
+import org.springframework.data.jdbc.repository.query.Query
+import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UserRepository {
-    fun getAll(): List<User>
+interface UserRepository : CrudRepository<User, Long> {
 
-    fun findById(id: Long): User?
-
-    fun create(user: User) : Long
-
-    fun update(id: Long, user: User)
-
-    fun delete(id: Long)
-    fun findByEmail(username: String?): User?
+    @Query("select * from user where email = :email")
+    fun findByEmail(@Param("email") email: String?): User?
 }
