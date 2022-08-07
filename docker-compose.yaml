@@ -1,0 +1,22 @@
+version: '3'
+services:
+  database:
+    image: mysql:8.0.30
+    restart: always
+    environment:
+      - MYSQL_DATABASES=my-database
+      - MYSQL_ROOT_PASSWORD=1q2w3e4r5t6y
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_MY_DATABASE=social_network
+    ports:
+      - "3307:3306"
+  application:
+    image: highloadsn:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"

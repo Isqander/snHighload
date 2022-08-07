@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/social_network
+    url: jdbc:mysql://localhost:3307/social_network
     username: root
     password: 1q2w3e4r5t6y
 logging:
