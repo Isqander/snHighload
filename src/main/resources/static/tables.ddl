@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS social_network;
+
+USE social_network;
+
 CREATE TABLE IF NOT EXISTS user
 (
     id        INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -18,7 +22,7 @@ CREATE TABLE IF NOT EXISTS interest
     name VARCHAR(255) NOT NULL
 ) ENGINE = INNODB;
 
-CREATE TABLE `user_to_interest`
+CREATE TABLE IF NOT EXISTS `user_to_interest`
 (
     user_id     INT NOT NULL,
     interest_id INT NOT NULL,
@@ -29,7 +33,7 @@ CREATE TABLE `user_to_interest`
         FOREIGN KEY interest_fk (interest_id) REFERENCES interest (id)
 ) ENGINE = INNODB;
 
-CREATE TABLE `friends`
+CREATE TABLE IF NOT EXISTS `friends`
 (
     first_user_id     INT NOT NULL,
     second_user_id INT NOT NULL,
