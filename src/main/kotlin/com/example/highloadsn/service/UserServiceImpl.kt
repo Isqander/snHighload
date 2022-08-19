@@ -6,6 +6,7 @@ import com.example.highloadsn.model.Role
 import com.example.highloadsn.model.User
 import com.example.highloadsn.repository.InterestRepository
 import com.example.highloadsn.repository.UserRepository
+import com.github.javafaker.Faker
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -85,6 +86,19 @@ class UserServiceImpl(
             user.addInterest(interest)
             userRepository.save(user)
         }
+    }
+
+    override fun generateData(quantity: Long) {
+        println("Generation started...")
+        for (i in 1 .. quantity){
+            val faker = Faker()
+            val user = UserDTO(0, faker.name().name(), faker.name().lastName(), faker.number().numberBetween(14, 100),
+                faker.demographic().sex(), HashSet(), faker.address().cityName(), faker.internet().emailAddress(),
+                faker.internet().password())
+            val savedUser = userRepository.save(user.toEntity())
+            (0 .. faker.number().numberBetween(0, 3)).forEach{addInterestToUser(savedUser.id, Interest(0, faker.hacker().noun()))}
+        }
+        println("Generation finished!")
     }
 
     private fun mapRolesToAuthorities(roles: Collection<Role>): Collection<GrantedAuthority?> {

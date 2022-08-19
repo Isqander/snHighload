@@ -46,4 +46,10 @@ class UserController(
         userService.delete(id)
         return ResponseEntity.ok().build()
     }
+
+    @GetMapping("/generate/{quantity}")
+    fun generateData(@PathVariable quantity: Long): ResponseEntity<Any>{
+        userService.generateData(quantity)
+        return ResponseEntity.ok().build()
+    }
 }

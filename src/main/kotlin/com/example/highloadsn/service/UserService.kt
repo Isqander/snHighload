@@ -15,4 +15,5 @@ interface UserService : UserDetailsService {
 
     fun delete(id: Long)
     fun addInterestToUser(userId: Long, interest: Interest)
+    fun generateData(quantity: Long)
 }
