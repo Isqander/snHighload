@@ -1,5 +1,6 @@
 package com.example.highloadsn.controller
 
+import com.example.highloadsn.dto.NameSurname
 import com.example.highloadsn.dto.UserDTO
 import com.example.highloadsn.model.Interest
 import com.example.highloadsn.service.UserService
@@ -33,6 +34,11 @@ class UserController(
     @PostMapping("/addInterest/{userId}")
     fun addInterest(@PathVariable userId: Long, @RequestBody interest: Interest): ResponseEntity<Any> {
         return ResponseEntity.ok(userService.addInterestToUser(userId, interest))
+    }
+
+    @PostMapping("/findByNameSurnamePart")
+    fun findByNameSurnamePart(@RequestBody nameSurname: NameSurname): ResponseEntity<List<UserDTO>> {
+        return ResponseEntity.ok(userService.findByNameSurnamePart(nameSurname))
     }
 
     @PutMapping("/{id}")

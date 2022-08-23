@@ -1,5 +1,6 @@
 package com.example.highloadsn.service
 
+import com.example.highloadsn.dto.NameSurname
 import com.example.highloadsn.dto.UserDTO
 import com.example.highloadsn.model.Interest
 import com.example.highloadsn.model.Role
@@ -99,6 +100,10 @@ class UserServiceImpl(
             (0 .. faker.number().numberBetween(0, 3)).forEach{addInterestToUser(savedUser.id, Interest(0, faker.hacker().noun()))}
         }
         println("Generation finished!")
+    }
+
+    override fun findByNameSurnamePart(nameSurname: NameSurname): List<UserDTO> {
+        return userRepository.findByNameSurnamePart(nameSurname.nameStartsWith + "%", nameSurname.surnameStartsWith + "%").map { it.toDTO() }
     }
 
     private fun mapRolesToAuthorities(roles: Collection<Role>): Collection<GrantedAuthority?> {

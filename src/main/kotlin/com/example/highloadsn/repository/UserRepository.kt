@@ -11,4 +11,7 @@ interface UserRepository : CrudRepository<User, Long> {
 
     @Query("select * from user where email = :email")
     fun findByEmail(@Param("email") email: String?): User?
+
+    @Query("select * from user where name like :nameStartsWith and surname like :surnameStartsWith")
+    fun findByNameSurnamePart(@Param("nameStartsWith")nameStartsWith: String, @Param("surnameStartsWith")surnameStartsWith: String): List<User>
 }
